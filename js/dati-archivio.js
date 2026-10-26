@@ -4,8 +4,8 @@ import { leggiTutto, modifica, cancella, cancellaFile, urlFirmatiMolti, urlFirma
 
 export const dati = { ponti: [], foto: [], perPonte: new Map(), senzaPonte: [] };
 
-export const TIPI = { giunti: 'Giunti', pavimentazioni: 'Pavimentazioni', strutture: 'Strutture' };
-export const COLORE_TIPO = { giunti: '#B45309', pavimentazioni: '#475569', strutture: '#6D28D9', nessuna: '#8A9490' };
+export const TIPI = { giunti: 'Giunti', pavimentazioni: 'Pavimentazioni', strutture: 'Strutture', altro: 'Altro' };
+export const COLORE_TIPO = { giunti: '#B45309', pavimentazioni: '#475569', strutture: '#6D28D9', altro: '#BE185D', nessuna: '#8A9490' };
 
 const COLONNE = 'id,ponte_id,categoria,nota,lat,lon,precisione_m,scattata_il,creato_il,path,autore,origine';
 

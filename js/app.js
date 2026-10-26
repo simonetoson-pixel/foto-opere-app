@@ -6,10 +6,10 @@ import { autenticato, entra, esci } from './rete.js';
 import { ponti as caricaPonti } from './dati.js';
 
 const $ = id => document.getElementById(id);
-const NOMI_TIPO = { giunti: 'Giunti', pavimentazioni: 'Pavimentazioni', strutture: 'Strutture' };
+const NOMI_TIPO = { giunti: 'Giunti', pavimentazioni: 'Pavimentazioni', strutture: 'Strutture', altro: 'Altro' };
 
 // Cambiarla insieme a CACHE in sw.js: e' il numero che l'app mostra in fondo.
-const VERSIONE = 1;
+const VERSIONE = 2;
 
 let ponti = [];
 let posizione = null;               // {lat, lon, precisione}
@@ -293,7 +293,7 @@ function segnaTipo() {
     t.setAttribute('aria-checked', String(a));
   });
   $('suggerimento').innerHTML = tipo
-    ? `Foto di <b>${NOMI_TIPO[tipo].toLowerCase()}</b>: un tocco per ogni foto.`
+    ? `Tipo <b>${NOMI_TIPO[tipo].toLowerCase()}</b>: un tocco per ogni foto.`
     : 'Scegli cosa stai fotografando,<br>poi un tocco per ogni foto.';
 }
 
@@ -310,7 +310,7 @@ function collega() {
     if (!tipo) {
       $('tipi').classList.remove('da-scegliere'); void $('tipi').offsetWidth; $('tipi').classList.add('da-scegliere');
       setTimeout(() => $('tipi').classList.remove('da-scegliere'), 1500);
-      return avvisa('Scegli prima: giunti, pavimentazioni o strutture');
+      return avvisa('Scegli prima: giunti, pavimentazioni, strutture o altro');
     }
     $('file-foto').click();
   });

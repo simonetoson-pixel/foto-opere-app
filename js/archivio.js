@@ -12,7 +12,7 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const SENZA = 'senza-opera';
 
-const filtri = { strada: '', tipi: new Set(['giunti', 'pavimentazioni', 'strutture', 'nessuna']), cerca: '', solo: false, foto: false };
+const filtri = { strada: '', tipi: new Set(['giunti', 'pavimentazioni', 'strutture', 'altro', 'nessuna']), cerca: '', solo: false, foto: false };
 let aperto = null;                  // id dell'opera aperta, o SENZA
 const scelte = new Set();           // id delle foto selezionate
 let mappa, marcatori = new Map(), gruppoFoto = null;
