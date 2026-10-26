@@ -1,0 +1,109 @@
+/* Ponti — archivio: da computer, con calma. */
+body.archivio { background: var(--sfondo); }
+body.archivio .schermata.attiva { display: flex; }
+[hidden] { display: none !important; }
+body.archivio .accesso { max-width: 380px; margin: auto; }
+
+.testata { display: flex; align-items: center; gap: 22px; background: var(--accento); color: #fff; padding: 10px 20px; }
+.marca { display: flex; align-items: center; gap: 11px; }
+.marca img { width: 34px; height: 34px; border-radius: 8px; }
+.marca h1 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.1; }
+.marca span { font-size: 11.5px; opacity: .8; }
+#cerca { flex: 1; max-width: 460px; font: inherit; padding: 9px 13px; border-radius: 9px; border: none; }
+.in-fondo { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+.btn-testata { font: inherit; font-size: 13.5px; padding: 8px 14px; border-radius: 8px; cursor: pointer;
+  background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.35); }
+.btn-testata:hover { background: rgba(255,255,255,.26); }
+.testata .esci { background: none; border: none; color: rgba(255,255,255,.75); cursor: pointer; text-decoration: underline; }
+
+.filtri { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 9px 20px; background: var(--carta); border-bottom: 1px solid var(--linea); font-size: 13.5px; }
+.filtri select { font: inherit; padding: 6px 9px; border-radius: 7px; border: 1px solid var(--linea); }
+.f-tipi { display: flex; gap: 14px; }
+.filtri label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.filtri label i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.conteggio { margin-left: auto; color: var(--tenue); }
+
+.corpo-archivio { flex: 1; min-height: 0; display: flex; }
+.elenco-ponti { width: 330px; flex: none; overflow-y: auto; background: var(--carta); border-right: 1px solid var(--linea); }
+#mappa { flex: 1; min-width: 0; }
+.pannello { width: 470px; flex: none; overflow-y: auto; background: var(--carta); border-left: 1px solid var(--linea); position: relative; }
+
+/* ---- elenco dei ponti */
+.gruppo-strada { position: sticky; top: 0; background: #ECEDE6; padding: 6px 14px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--tenue); z-index: 1; }
+.riga-ponte { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 9px 14px; background: none; border: none; border-bottom: 1px solid #EEEEE8; cursor: pointer; font: inherit; }
+.riga-ponte:hover { background: var(--accento-chiaro); }
+.riga-ponte.attivo { background: var(--accento-chiaro); box-shadow: inset 3px 0 0 var(--accento); }
+.riga-ponte .nome { flex: 1; min-width: 0; }
+.riga-ponte b { display: block; font-weight: 600; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.riga-ponte small { color: var(--tenue); font-size: 12px; }
+.riga-ponte .n { font-size: 12px; background: var(--accento); color: #fff; border-radius: 10px; padding: 1px 8px; font-variant-numeric: tabular-nums; }
+.riga-ponte .n.zero { background: transparent; color: #B3B8B4; }
+.riga-ponte.speciale b { color: var(--allarme); }
+
+/* ---- il pannello del ponte */
+.p-testa { padding: 16px 18px 10px; border-bottom: 1px solid var(--linea); position: sticky; top: 0; background: var(--carta); z-index: 2; }
+.p-testa h2 { margin: 0 34px 2px 0; font-size: 19px; line-height: 1.2; }
+.p-testa .sotto { color: var(--tenue); font-size: 13px; }
+.p-chiudi { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 26px; cursor: pointer; color: var(--tenue); }
+.p-azioni { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.p-azioni button, .barra-selezione button { font: inherit; font-size: 12.5px; padding: 6px 11px; border-radius: 8px; border: 1.5px solid var(--accento); background: var(--carta); color: var(--accento); cursor: pointer; }
+.p-azioni button:hover, .barra-selezione button:hover { background: var(--accento-chiaro); }
+.p-azioni button:disabled { opacity: .5; cursor: default; }
+.chip { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.chip button { font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 14px; border: 1px solid var(--linea); background: var(--carta); cursor: pointer; }
+.chip button.on { background: var(--inchiostro); color: #fff; border-color: var(--inchiostro); }
+.barra-selezione { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px 18px; background: #FFF3CF; border-bottom: 1px solid #E5D49B; font-size: 13px; position: sticky; top: 0; z-index: 2; }
+.barra-selezione select { font: inherit; font-size: 12.5px; padding: 5px; border-radius: 7px; }
+.p-giorno { padding: 14px 18px 4px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--tenue); }
+.griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 0 18px; }
+.mini { position: relative; aspect-ratio: 4/3; border-radius: 6px; overflow: hidden; background: #22252a; cursor: zoom-in; }
+.mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini .tipo-p { position: absolute; left: 5px; bottom: 5px; width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid #fff; }
+.mini .spunta { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; opacity: 0; cursor: pointer; }
+.mini:hover .spunta, .mini.scelta .spunta { opacity: 1; }
+.mini.scelta { outline: 3px solid var(--accento); outline-offset: -3px; }
+.p-vuoto { padding: 30px 18px; color: var(--tenue); text-align: center; }
+
+/* ---- la foto a schermo intero */
+.visore { position: fixed; inset: 0; z-index: 2000; background: rgba(12,14,14,.95); display: flex; }
+.visore .tela { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.visore .tela img { max-width: 100%; max-height: 100%; user-select: none; transform-origin: center; will-change: transform; touch-action: none; cursor: zoom-in; }
+.visore.ingrandita .tela img { cursor: grab; }
+.visore.trascinando .tela img { cursor: grabbing; }
+.v-chiudi, .v-prec, .v-succ { position: absolute; background: rgba(0,0,0,.5); color: #fff; border: none; cursor: pointer; z-index: 3; }
+.v-chiudi { top: 14px; left: 14px; width: 40px; height: 40px; border-radius: 50%; font-size: 26px; }
+.v-prec, .v-succ { top: 50%; width: 48px; height: 80px; font-size: 38px; transform: translateY(-50%); }
+.v-prec { left: 0; border-radius: 0 8px 8px 0; } .v-succ { right: 330px; border-radius: 8px 0 0 8px; }
+.v-zoom { position: absolute; left: 50%; transform: translateX(-165px); bottom: 18px; display: flex; align-items: center; gap: 4px; background: rgba(20,24,26,.8); border-radius: 10px; padding: 5px 6px; color: #fff; z-index: 3; }
+.v-zoom button { font: inherit; font-size: 13px; color: #fff; background: transparent; border: none; border-radius: 7px; padding: 7px 11px; cursor: pointer; min-width: 36px; }
+.v-zoom button:hover { background: rgba(255,255,255,.18); }
+.v-livello { min-width: 56px; text-align: center; font-size: 12px; opacity: .85; }
+.v-info { width: 330px; flex: none; background: var(--carta); padding: 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+.v-info label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--tenue); }
+.v-info input, .v-info textarea { font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--linea); border-radius: 8px; color: var(--inchiostro); }
+.v-conta { font-size: 12px; color: var(--tenue); }
+.v-tipi { display: flex; gap: 6px; }
+.v-tipi button { flex: 1; font: inherit; font-size: 12.5px; font-weight: 600; padding: 9px 4px; border-radius: 8px; border: 1.5px solid var(--linea); background: var(--carta); cursor: pointer; }
+.v-tipi button.attivo { color: #fff; border-color: transparent; }
+.v-dati { font-size: 12.5px; color: var(--tenue); margin: 0; line-height: 1.6; }
+.v-azioni { display: flex; gap: 8px; }
+.v-azioni button { font: inherit; padding: 9px 14px; border-radius: 8px; border: 1.5px solid var(--accento); background: var(--carta); color: var(--accento); cursor: pointer; }
+.v-azioni .v-elimina { border-color: var(--allarme); color: var(--allarme); margin-left: auto; }
+.v-esito { min-height: 18px; font-size: 12.5px; color: var(--sicuro); margin: 0; }
+
+/* ---- aggiungere foto dal computer */
+.velo { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1500; display: flex; align-items: center; justify-content: center; }
+.dialogo { background: var(--carta); border-radius: 12px; padding: 22px 24px; width: min(560px, 94vw); max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+.dialogo h3 { margin: 0 0 4px; }
+.dialogo .rias { color: var(--tenue); font-size: 13px; margin-bottom: 14px; }
+.dialogo label { display: block; font-size: 12px; color: var(--tenue); margin: 12px 0 4px; }
+.dialogo input, .dialogo select, .dialogo textarea { width: 100%; font: inherit; font-size: 14px; padding: 8px 10px; border: 1px solid var(--linea); border-radius: 8px; }
+.dialogo .az { display: flex; gap: 10px; margin-top: 18px; justify-content: flex-end; }
+.dialogo .az button { font: inherit; padding: 9px 16px; border-radius: 8px; border: 1px solid var(--linea); background: var(--carta); cursor: pointer; }
+.dialogo .az .ok { background: var(--accento); color: #fff; border-color: var(--accento); font-weight: 600; }
+.dialogo .az button:disabled { opacity: .5; }
+.dialogo .esito { margin-top: 10px; font-size: 13px; color: var(--tenue); }
+
+.messaggio { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%) translateY(12px); background: #263330; color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 14px; opacity: 0; transition: .2s; pointer-events: none; z-index: 3000; }
+.messaggio.visibile { opacity: 1; transform: translateX(-50%); }
+.punto-ponte { font-size: 0; }

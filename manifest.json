@@ -1,0 +1,14 @@
+{
+  "name": "Ponti — foto",
+  "short_name": "Ponti foto",
+  "description": "Foto dei lavori sui ponti, per ponte e per tipo di lavoro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1F1EC",
+  "theme_color": "#1F5F55",
+  "lang": "it",
+  "icons": [
+    { "src": "icona.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

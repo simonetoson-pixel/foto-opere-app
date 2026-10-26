@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1F5F55">
+<title>Ponti — archivio foto</title>
+<link rel="icon" href="icona.svg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<link rel="stylesheet" href="stile.css">
+<link rel="stylesheet" href="archivio.css">
+</head>
+<body class="archivio">
+
+<section class="schermata attiva" id="s-accesso">
+  <div class="accesso">
+    <img src="icona.svg" alt="" class="marchio">
+    <h1>Ponti — foto</h1>
+    <p class="occhiello">Archivio delle foto dei lavori</p>
+    <form id="modulo-accesso" onsubmit="return false">
+      <input type="email" id="email" placeholder="Email" autocomplete="username" required>
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password" required>
+      <button type="submit" class="salva" id="b-entra">ENTRA</button>
+      <p class="errore-accesso" id="errore-accesso" hidden></p>
+    </form>
+  </div>
+</section>
+
+<section class="schermata" id="s-archivio">
+  <header class="testata">
+    <div class="marca">
+      <img src="icona.svg" alt="">
+      <div><h1>Ponti — foto</h1><span id="sottotitolo"></span></div>
+    </div>
+    <input type="search" id="cerca" placeholder="Cerca un ponte: nome, strada, comune, km…" autocomplete="off">
+    <div class="in-fondo">
+      <button type="button" class="btn-testata" id="b-aggiungi">&#43; Aggiungi foto dal computer</button>
+      <button class="esci" id="b-esci" type="button">Esci</button>
+    </div>
+  </header>
+
+  <div class="filtri">
+    <select id="f-strada"><option value="">Tutte le strade</option></select>
+    <div class="f-tipi" id="f-tipi">
+      <label><input type="checkbox" data-tipo="giunti" checked><i style="background:#B45309"></i>Giunti</label>
+      <label><input type="checkbox" data-tipo="pavimentazioni" checked><i style="background:#475569"></i>Pavimentazioni</label>
+      <label><input type="checkbox" data-tipo="strutture" checked><i style="background:#6D28D9"></i>Strutture</label>
+      <label><input type="checkbox" data-tipo="nessuna" checked><i style="background:#8A9490"></i>Tipo non indicato</label>
+    </div>
+    <label class="f-uno"><input type="checkbox" id="f-solo"> Solo ponti con foto</label>
+    <label class="f-uno"><input type="checkbox" id="f-foto"> Foto sulla mappa</label>
+    <span class="conteggio" id="conta"></span>
+  </div>
+
+  <div class="corpo-archivio">
+    <aside class="elenco-ponti" id="elenco"></aside>
+    <div id="mappa"></div>
+    <aside class="pannello" id="pannello" hidden></aside>
+  </div>
+</section>
+
+<div class="messaggio" id="messaggio" role="status"></div>
+<script type="module" src="js/archivio.js"></script>
+</body>
+</html>

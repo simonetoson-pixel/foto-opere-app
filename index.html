@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#1F5F55">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ponti — foto</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+
+<!-- ------------------------------------------------------------ accesso -->
+<section class="schermata attiva" id="s-accesso">
+  <div class="accesso">
+    <img src="icona.svg" alt="" class="marchio">
+    <h1>Ponti — foto</h1>
+    <p class="occhiello">Foto dei lavori sui ponti</p>
+    <form id="modulo-accesso" onsubmit="return false">
+      <input type="email" id="email" placeholder="Email" autocomplete="username" required>
+      <input type="password" id="password" placeholder="Password" autocomplete="current-password" required>
+      <button type="submit" class="salva" id="b-entra">ENTRA</button>
+      <p class="errore-accesso" id="errore-accesso" hidden></p>
+    </form>
+    <p class="nota-accesso">L'accesso serve una volta sola per dispositivo.</p>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------- scatto -->
+<section class="schermata" id="s-scatto">
+  <div class="posizione cercando" id="posizione">
+    <span class="dove" id="dove">Cerco la posizione…</span>
+    <span class="opera" id="opera-vicina"></span>
+    <span class="segnale" id="segnale">GPS in attesa</span>
+    <div class="scelte">
+      <button type="button" class="scelta" id="b-cambia-ponte">Cambia ponte</button>
+      <button type="button" class="scelta" id="b-torna-auto" hidden>Torna al più vicino</button>
+    </div>
+  </div>
+
+  <div class="tipi" id="tipi" role="radiogroup" aria-label="Cosa stai fotografando">
+    <button type="button" class="tipo" data-tipo="giunti" role="radio">Giunti</button>
+    <button type="button" class="tipo" data-tipo="pavimentazioni" role="radio">Pavimentazioni</button>
+    <button type="button" class="tipo" data-tipo="strutture" role="radio">Strutture</button>
+  </div>
+
+  <div class="centro">
+    <p class="suggerimento" id="suggerimento">Scegli cosa stai fotografando,<br>poi un tocco per ogni foto.</p>
+    <button class="scatta" id="b-scatta" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+        <circle cx="12" cy="13.5" r="3.4"/>
+      </svg>
+      SCATTA FOTO
+    </button>
+  </div>
+
+  <div class="coda">
+    <div class="coda-testa">
+      <span id="coda-testo">Tutto sincronizzato</span>
+      <button type="button" class="invia-ora" id="b-sincronizza" hidden>Invia ora</button>
+    </div>
+    <div id="recenti"></div>
+    <div class="piede">
+      <span id="versione"></span>
+      <button type="button" class="esci" id="b-esci">Esci</button>
+    </div>
+  </div>
+</section>
+
+<!-- ----------------------------------------------------- scelta del ponte -->
+<section class="schermata" id="s-scelta">
+  <header class="testata-scelta">
+    <button type="button" class="indietro" id="b-scelta-chiudi" aria-label="Chiudi">&times;</button>
+    <input type="search" id="cerca-ponte" placeholder="Cerca un ponte: nome, strada, comune, km…" autocomplete="off">
+  </header>
+  <div class="elenco" id="elenco-ponti"></div>
+</section>
+
+<!-- ------------------------------------------------------ una foto, dopo -->
+<section class="schermata" id="s-foto">
+  <header class="testata-scelta">
+    <button type="button" class="indietro" id="b-foto-chiudi" aria-label="Chiudi">&times;</button>
+    <strong id="foto-titolo">Foto</strong>
+  </header>
+  <div class="corpo" id="foto-corpo">
+    <img id="foto-img" alt="">
+    <button type="button" class="riga-scelta" id="b-foto-ponte"></button>
+    <div class="tipi" id="foto-tipi">
+      <button type="button" class="tipo" data-tipo="giunti">Giunti</button>
+      <button type="button" class="tipo" data-tipo="pavimentazioni">Pavimentazioni</button>
+      <button type="button" class="tipo" data-tipo="strutture">Strutture</button>
+    </div>
+    <textarea id="foto-nota" placeholder="Nota (facoltativa)" rows="3"></textarea>
+    <p class="dettaglio" id="foto-dettaglio"></p>
+    <button type="button" class="salva" id="b-foto-salva">SALVA</button>
+    <button type="button" class="elimina" id="b-foto-elimina">Elimina la foto</button>
+  </div>
+</section>
+
+<div class="avviso" id="avviso" role="status"></div>
+<input type="file" id="file-foto" accept="image/*" capture="environment" hidden>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
