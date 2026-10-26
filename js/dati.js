@@ -1,9 +1,9 @@
-// L'elenco dei ponti sul telefono: si tiene in memoria locale cosi funziona anche
+// L'elenco delle opere sul telefono: si tiene in memoria locale cosi funziona anche
 // dove non c'e' campo, e si aggiorna quando c'e'.
 
 import { leggiTutto } from './rete.js';
 
-const DB = 'ponti-dati', MAGAZZINO = 'ponti';
+const DB = 'opere-dati', MAGAZZINO = 'ponti';
 
 function apri() {
   return new Promise((ok, no) => {

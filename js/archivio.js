@@ -1,4 +1,4 @@
-// Ponti — archivio sul computer: la mappa dei ponti, le foto per ponte, il resto.
+// Foto opere — archivio sul computer: la mappa delle opere, le foto per opera, il resto.
 
 import { autenticato, entra, esci, emailUtente } from './rete.js';
 import {
@@ -10,10 +10,10 @@ import { vicini } from './vicini.js';
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const SENZA = 'senza-ponte';
+const SENZA = 'senza-opera';
 
 const filtri = { strada: '', tipi: new Set(['giunti', 'pavimentazioni', 'strutture', 'nessuna']), cerca: '', solo: false, foto: false };
-let aperto = null;                  // id del ponte aperto, o SENZA
+let aperto = null;                  // id dell'opera aperta, o SENZA
 const scelte = new Set();           // id delle foto selezionate
 let mappa, marcatori = new Map(), gruppoFoto = null;
 
@@ -85,7 +85,7 @@ function aggiornaMappa() {
       const p = ponteDi(f.ponte_id);
       if (p && !ponteVisibile(p)) continue;
       const m = L.circleMarker([f.lat, f.lon], { radius: 5, weight: 1.5, color: '#fff', fillOpacity: 1, fillColor: COLORE_TIPO[chiave(f)] });
-      m.bindTooltip(`${p ? esc(p.nome) : 'senza ponte'}<br>${f.scattata_il ? new Date(f.scattata_il).toLocaleDateString('it-IT') : ''}`);
+      m.bindTooltip(`${p ? esc(p.nome) : 'senza opera'}<br>${f.scattata_il ? new Date(f.scattata_il).toLocaleDateString('it-IT') : ''}`);
       m.on('click', () => apriVisore({ elenco: [f], indice: 0, dopo: ridisegna }));
       gruppoFoto.addLayer(m);
     }
@@ -99,7 +99,7 @@ function disegnaElenco() {
   let html = '';
   if (dati.senzaPonte.length && !filtri.cerca) {
     html += `<button type="button" class="riga-ponte speciale${aperto === SENZA ? ' attivo' : ''}" data-id="${SENZA}">
-      <span class="nome"><b>Foto senza ponte</b><small>da assegnare a un ponte</small></span><span class="n">${dati.senzaPonte.filter(passa).length}</span></button>`;
+      <span class="nome"><b>Foto senza opera</b><small>da assegnare a un\'opera</small></span><span class="n">${dati.senzaPonte.filter(passa).length}</span></button>`;
   }
   let strada = null;
   for (const p of visibili) {
@@ -109,9 +109,9 @@ function disegnaElenco() {
       <span class="nome"><b>${esc(p.nome)}</b><small>km ${esc(p.km)}${p.comune ? ' · ' + esc(p.comune) : ''}</small></span>
       <span class="n${n ? '' : ' zero'}">${n}</span></button>`;
   }
-  $('elenco').innerHTML = html || '<p class="p-vuoto">Nessun ponte con questi filtri.</p>';
+  $('elenco').innerHTML = html || '<p class="p-vuoto">Nessuna opera con questi filtri.</p>';
   const con = visibili.filter(p => fotoDel(p.id).length).length;
-  $('conta').textContent = `${visibili.length} ponti, ${con} con foto · ${dati.foto.length} foto in tutto`;
+  $('conta').textContent = `${visibili.length} opere, ${con} con foto · ${dati.foto.length} foto in tutto`;
 }
 
 // ------------------------------------------------------------------ pannello
@@ -150,8 +150,8 @@ function disegnaPannello() {
 
   let html = `<div class="p-testa">
     <button class="p-chiudi" type="button" id="p-chiudi" aria-label="Chiudi">&times;</button>
-    <h2>${p ? esc(p.nome) : 'Foto senza ponte'}</h2>
-    <div class="sotto">${p ? `${esc(p.strada)} · km ${esc(p.km)}${p.comune ? ' · ' + esc(p.comune) : ''}${p.tipologia ? ' · ' + esc(p.tipologia) : ''}` : 'foto non ancora assegnate a un ponte'}</div>
+    <h2>${p ? esc(p.nome) : 'Foto senza opera'}</h2>
+    <div class="sotto">${p ? `${esc(p.strada)} · km ${esc(p.km)}${p.comune ? ' · ' + esc(p.comune) : ''}${p.tipologia ? ' · ' + esc(p.tipologia) : ''}` : 'foto non ancora assegnate a un\'opera'}</div>
     <div class="sotto">${tutte.length ? `${tutte.length} foto${dettaglio ? ': ' + dettaglio : ''}` : 'nessuna foto'}</div>
     <div class="p-azioni">
       <button type="button" id="p-zip"${foto.length ? '' : ' disabled'}>&#8681; Scarica tutte (ZIP)</button>
@@ -161,10 +161,10 @@ function disegnaPannello() {
   if (scelte.size) {
     html += `<div class="barra-selezione"><b>${scelte.size}</b> selezionate
       <select id="s-tipo"><option value="">Tipo…</option>${Object.entries(TIPI).map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}<option value="-">Non indicato</option></select>
-      <input id="s-ponte" list="elenco-datalist" placeholder="Sposta in un altro ponte…" style="font:inherit;font-size:12.5px;padding:5px;border-radius:7px;border:1px solid #ccc;width:200px">
+      <input id="s-ponte" list="elenco-datalist" placeholder="Sposta in un\'altra opera…" style="font:inherit;font-size:12.5px;padding:5px;border-radius:7px;border:1px solid #ccc;width:200px">
       <button type="button" id="s-zip">Scarica</button><button type="button" id="s-elimina">Elimina</button><button type="button" id="s-annulla">Annulla</button></div>`;
   }
-  if (!foto.length) html += `<p class="p-vuoto">${tutte.length ? 'Nessuna foto con i filtri scelti.' : 'Ancora nessuna foto per questo ponte.<br>Si aggiungono dal telefono o con «Aggiungi foto».'}</p>`;
+  if (!foto.length) html += `<p class="p-vuoto">${tutte.length ? 'Nessuna foto con i filtri scelti.' : 'Ancora nessuna foto per quest\'opera.<br>Si aggiungono dal telefono o con «Aggiungi foto».'}</p>`;
   const perGiorno = new Map();
   for (const f of foto) { const g = giornoDi(f); if (!perGiorno.has(g)) perGiorno.set(g, []); perGiorno.get(g).push(f); }
   for (const [g, lista] of perGiorno) {
@@ -195,7 +195,7 @@ function collegaPannello() {
     if (id === 'p-chiudi') return chiudiPannello();
     if (id === 'p-tutte') { foto.forEach(f => scelte.add(f.id)); return disegnaPannello(); }
     if (id === 'p-aggiungi') return dialogoAggiungi();
-    if (id === 'p-zip') return scaricaZip(foto, aperto === SENZA ? 'foto-senza-ponte' : ponteDi(aperto).nome);
+    if (id === 'p-zip') return scaricaZip(foto, aperto === SENZA ? 'foto-senza-opera' : ponteDi(aperto).nome);
     if (id === 's-annulla') { scelte.clear(); return disegnaPannello(); }
     if (id === 's-zip') return scaricaZip(foto.filter(f => scelte.has(f.id)), 'foto-selezionate');
     if (id === 's-elimina') {
@@ -221,7 +221,7 @@ function collegaPannello() {
     }
     if (e.target.id === 's-ponte') {
       const p = dati.ponti.find(x => `${x.nome} — ${x.strada} km ${x.km}` === e.target.value);
-      if (!p) return msg('Scegli un ponte dall’elenco');
+      if (!p) return msg('Scegli un\'opera dall’elenco');
       for (const f of foto) await cambia(f, { ponte_id: p.id });
       ricostruisci(); msg(`${foto.length} foto spostate in ${p.nome}`); scelte.clear(); return ridisegna();
     }
@@ -268,8 +268,8 @@ function dialogoCarico(lista) {
   v.className = 'velo';
   v.innerHTML = `<div class="dialogo"><h3>Aggiungi ${lista.length} foto</h3>
     <div class="rias">${d1 === d2 ? d1 : `dal ${d1} al ${d2}`} · ${conGps} con posizione GPS · ${lista.filter(x => x.exif).length} con data di scatto</div>
-    <label>Ponte (se lo lasci vuoto lo cerco dalla posizione della foto)</label>
-    <input id="d-ponte" list="elenco-datalist" value="${p0 ? esc(`${p0.nome} — ${p0.strada} km ${p0.km}`) : ''}" placeholder="Scrivi il nome del ponte…">
+    <label>Opera (se la lasci vuota la cerco dalla posizione della foto)</label>
+    <input id="d-ponte" list="elenco-datalist" value="${p0 ? esc(`${p0.nome} — ${p0.strada} km ${p0.km}`) : ''}" placeholder="Scrivi il nome dell\'opera…">
     <label>Cosa mostrano</label>
     <select id="d-tipo"><option value="">Non indicato</option>${Object.entries(TIPI).map(([k, n]) => `<option value="${k}">${n}</option>`).join('')}</select>
     <label>Nota (facoltativa, uguale per tutte)</label><textarea id="d-nota" rows="2"></textarea>
@@ -281,7 +281,7 @@ function dialogoCarico(lista) {
   q('#d-carica').onclick = async () => {
     const testo = q('#d-ponte').value.trim();
     const scelto = testo ? dati.ponti.find(x => `${x.nome} — ${x.strada} km ${x.km}` === testo) : null;
-    if (testo && !scelto) return (q('#d-esito').textContent = 'Scegli un ponte dall’elenco, o lascia il campo vuoto.');
+    if (testo && !scelto) return (q('#d-esito').textContent = 'Scegli un\'opera dall’elenco, o lascia il campo vuoto.');
     q('#d-carica').disabled = true; q('#d-annulla').disabled = true;
     let ok = 0, errori = 0;
     for (const foto of lista) {

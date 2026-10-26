@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1F5F55">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Ponti — foto</title>
+<title>Foto opere</title>
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="stile.css">
 </head>
@@ -16,8 +16,8 @@
 <section class="schermata attiva" id="s-accesso">
   <div class="accesso">
     <img src="icona.svg" alt="" class="marchio">
-    <h1>Ponti — foto</h1>
-    <p class="occhiello">Foto dei lavori sui ponti</p>
+    <h1>Foto opere</h1>
+    <p class="occhiello">Foto dei lavori sulle opere</p>
     <form id="modulo-accesso" onsubmit="return false">
       <input type="email" id="email" placeholder="Email" autocomplete="username" required>
       <input type="password" id="password" placeholder="Password" autocomplete="current-password" required>
@@ -35,7 +35,7 @@
     <span class="opera" id="opera-vicina"></span>
     <span class="segnale" id="segnale">GPS in attesa</span>
     <div class="scelte">
-      <button type="button" class="scelta" id="b-cambia-ponte">Cambia ponte</button>
+      <button type="button" class="scelta" id="b-cambia-ponte">Cambia opera</button>
       <button type="button" class="scelta" id="b-torna-auto" hidden>Torna al più vicino</button>
     </div>
   </div>
@@ -70,11 +70,11 @@
   </div>
 </section>
 
-<!-- ----------------------------------------------------- scelta del ponte -->
+<!-- ----------------------------------------------------- scelta dell'opera -->
 <section class="schermata" id="s-scelta">
   <header class="testata-scelta">
     <button type="button" class="indietro" id="b-scelta-chiudi" aria-label="Chiudi">&times;</button>
-    <input type="search" id="cerca-ponte" placeholder="Cerca un ponte: nome, strada, comune, km…" autocomplete="off">
+    <input type="search" id="cerca-ponte" placeholder="Cerca un'opera: nome, strada, comune, km…" autocomplete="off">
   </header>
   <div class="elenco" id="elenco-ponti"></div>
 </section>

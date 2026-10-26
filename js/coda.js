@@ -5,13 +5,13 @@
 // e' ripetibile (stesso codice, stesso file, stessa riga): se si interrompe a meta'
 // si rifa senza creare doppioni.
 //
-// Una foto gia' inviata resta modificabile (ponte, tipo, nota): la modifica rientra
+// Una foto gia' inviata resta modificabile (opera, tipo, nota): la modifica rientra
 // in coda come tutto il resto. Del file grande sul telefono non resta niente dopo
 // l'invio: si tiene solo la miniatura, per l'elenco.
 
 import { caricaFile, scrivi, cancella, cancellaFile } from './rete.js';
 
-const DB = 'ponti-coda', MAGAZZINO = 'foto';
+const DB = 'opere-coda', MAGAZZINO = 'foto';
 
 function apri() {
   return new Promise((ok, no) => {
@@ -65,7 +65,7 @@ function riga(f) {
 
 export function spiega(e) {
   const t = String(e && e.message || e);
-  if (/23503|foreign key/i.test(t)) return 'il ponte di questa foto non esiste più: aprila e scegli quello giusto';
+  if (/23503|foreign key/i.test(t)) return "l'opera di questa foto non esiste più: aprila e scegli quella giusta";
   if (/401|403|JWT/i.test(t)) return 'accesso scaduto: esci e rientra';
   if (/Failed to fetch|NetworkError|Load failed/i.test(t)) return 'nessuna rete';
   return t.slice(0, 120);

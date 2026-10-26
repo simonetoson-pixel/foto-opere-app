@@ -1,7 +1,7 @@
 // Service worker: tiene in cache l'app, perche' in cantiere deve aprirsi anche senza rete.
 
 // Alzare insieme a VERSIONE in js/app.js.
-const CACHE = 'ponti-v1';
+const CACHE = 'opere-v1';
 const FILE = [
   './', './index.html', './stile.css', './manifest.json',
   './js/app.js', './js/vicini.js', './js/coda.js', './js/rete.js', './js/dati.js',

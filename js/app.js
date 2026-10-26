@@ -1,4 +1,4 @@
-// Ponti — foto: la schermata del telefono.
+// Foto opere: la schermata del telefono.
 
 import { vicini, affidabilita, distanzaLeggibile, metri } from './vicini.js';
 import { accoda, aggiorna, elimina, sincronizza, tutte, una } from './coda.js';
@@ -13,9 +13,9 @@ const VERSIONE = 1;
 
 let ponti = [];
 let posizione = null;               // {lat, lon, precisione}
-let proposta = null;                // il ponte piu vicino: {ponte, distanza, centro}
-let scelto = null;                  // il ponte scelto a mano: {ponte, lat, lon}
-let tipo = lettura('ponti-tipo');   // giunti | pavimentazioni | strutture
+let proposta = null;                // l'opera piu vicina: {ponte, distanza, centro}
+let scelto = null;                  // l'opera scelta a mano: {ponte, lat, lon}
+let tipo = lettura('opere-tipo');   // giunti | pavimentazioni | strutture
 let aggiornamentoPronto = false;
 let apertaFoto = null;              // la foto che si sta rivedendo
 let urlMiniature = [];
@@ -56,7 +56,7 @@ function seguiPosizione() {
       $('dove').textContent = 'Posizione non disponibile';
       $('opera-vicina').textContent = '';
       $('segnale').textContent = e.code === e.PERMISSION_DENIED
-        ? 'permesso negato: il ponte lo scegli tu' : 'GPS assente: il ponte lo scegli tu';
+        ? 'permesso negato: l\'opera la scegli tu' : 'GPS assente: l\'opera la scegli tu';
     },
     { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
 }
@@ -70,7 +70,7 @@ function posizioneAdesso() {
   });
 }
 
-// La scelta a mano vale finche' non ci si allontana: poi il ponte e' un altro.
+// La scelta a mano vale finche' non ci si allontana: poi l'opera e' un'altra.
 const RILASCIO_M = 250;
 
 function aggiornaPosizione() {
@@ -92,33 +92,33 @@ function aggiornaPosizione() {
   }
   if (!proposta) {
     fascia.className = 'posizione lontano';
-    $('dove').textContent = 'Nessun ponte in zona';
+    $('dove').textContent = 'Nessuna opera in zona';
     $('opera-vicina').textContent = '';
-    $('segnale').textContent = `${gps} · il ponte lo scegli tu`;
+    $('segnale').textContent = `${gps} · l\'opera la scegli tu`;
     return;
   }
   if (affidabilita(proposta.distanza, posizione.precisione) === 'incerta') {
     fascia.className = 'posizione lontano';
-    $('dove').textContent = 'Nessun ponte qui vicino';
+    $('dove').textContent = 'Nessuna opera qui vicino';
     $('opera-vicina').textContent = `il più vicino a ${distanzaLeggibile(proposta.distanza)}: ${proposta.ponte.nome}`;
-    $('segnale').textContent = `${gps} · puoi scattare, il ponte lo scegli dopo`;
+    $('segnale').textContent = `${gps} · puoi scattare, l\'opera la scegli dopo`;
     return;
   }
   fascia.className = 'posizione';
   $('dove').textContent = proposta.ponte.nome;
   $('opera-vicina').textContent = dove(proposta.ponte);
-  $('segnale').textContent = `${proposta.distanza < 5 ? 'sul ponte' : distanzaLeggibile(proposta.distanza)} · ${gps}`;
+  $('segnale').textContent = `${proposta.distanza < 5 ? 'sull\'opera' : distanzaLeggibile(proposta.distanza)} · ${gps}`;
 }
 
-// Il ponte a cui va la prossima foto: quello scelto, o il piu vicino se e' vicino davvero.
+// L'opera a cui va la prossima foto: quello scelto, o il piu vicino se e' vicino davvero.
 function ponteCorrente() {
   if (scelto) return scelto.ponte;
   if (proposta && posizione && affidabilita(proposta.distanza, posizione.precisione) !== 'incerta') return proposta.ponte;
   return null;
 }
 
-// ---------------------------------------------------------- scelta del ponte
-let alla = null;     // cosa fare con il ponte scelto
+// ---------------------------------------------------------- scelta dell'opera
+let alla = null;     // cosa fare con l'opera scelta
 let centro = null;   // da dove si contano le distanze
 let tornaA = 's-scatto';
 
@@ -147,7 +147,7 @@ function disegnaElenco(correnteId) {
     <button type="button" class="voce${p.id === correnteId ? ' corrente' : ''}" data-id="${p.id}">
       <b>${esc(p.nome)}</b>
       <small>${esc(dove(p))}${d != null ? ' · ' + distanzaLeggibile(d) : ''}</small>
-    </button>`).join('') || '<p class="dettaglio">Nessun ponte con queste parole.</p>';
+    </button>`).join('') || '<p class="dettaglio">Nessuna opera con queste parole.</p>';
 }
 
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -185,7 +185,7 @@ async function fotoScattata(file) {
     lat: pos ? pos.lat : null, lon: pos ? pos.lon : null, precisione_m: pos ? pos.precisione : null,
     scattata_il: new Date().toISOString(), blob: grande, miniatura,
   });
-  avvisa(p ? `Salvata · ${p.nome}` : 'Salvata · ponte da scegliere', p ? 'buono' : '');
+  avvisa(p ? `Salvata · ${p.nome}` : 'Salvata · opera da scegliere', p ? 'buono' : '');
   aggiornaCoda();
   provaSincronizzare();
 }
@@ -223,7 +223,7 @@ async function aggiornaCoda() {
     const s = statoDi(f);
     html += `<button type="button" class="recente" data-id="${f.id}">
       <img src="${url}" alt="">
-      <span class="testo"><b>${esc(p ? p.nome : 'Ponte da scegliere')}</b>
+      <span class="testo"><b>${esc(p ? p.nome : 'Opera da scegliere')}</b>
         <small><span class="pallino ${f.categoria || ''}"></span>${esc(NOMI_TIPO[f.categoria] || 'Tipo non indicato')} · ${new Date(f.scattata_il).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}</small></span>
       <span class="stato ${s.c}">${s.t}</span></button>`;
   }
@@ -260,7 +260,7 @@ function disegnaFoto() {
   const b = $('b-foto-ponte');
   b.classList.toggle('manca', !p);
   b.innerHTML = p ? `<b>${esc(p.nome)}</b><small>${esc(dove(p))} · tocca per cambiare</small>`
-    : '<b>Ponte da scegliere</b><small>tocca per sceglierlo</small>';
+    : '<b>Opera da scegliere</b><small>tocca per sceglierla</small>';
   document.querySelectorAll('#foto-tipi .tipo').forEach(t => t.classList.toggle('attivo', t.dataset.tipo === modifica.categoria));
 }
 
@@ -302,7 +302,7 @@ function collega() {
     const b = e.target.closest('.tipo');
     if (!b) return;
     tipo = b.dataset.tipo;
-    scrittura('ponti-tipo', tipo);
+    scrittura('opere-tipo', tipo);
     segnaTipo();
   });
 
@@ -364,7 +364,7 @@ async function apriApp() {
   try {
     ponti = await caricaPonti({ onAggiornato: fresche => { ponti = fresche; aggiornaPosizione(); aggiornaCoda(); } });
   } catch (e) {
-    avvisa('Non riesco a leggere i ponti: ' + String(e.message || e).slice(0, 80), 'male');
+    avvisa('Non riesco a leggere le opere: ' + String(e.message || e).slice(0, 80), 'male');
     return;
   }
   aggiornaCoda();

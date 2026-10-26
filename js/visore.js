@@ -1,4 +1,4 @@
-// La foto a schermo intero: zoom, spostamento, scarico, e le modifiche (ponte, tipo, nota).
+// La foto a schermo intero: zoom, spostamento, scarico, e le modifiche (opera, tipo, nota).
 //
 // Zoom: rotellina o pizzico del trackpad (con il puntatore come centro), doppio clic,
 // pulsanti, tasti + - 0. Trascinando si sposta la foto quando e' ingrandita.
@@ -12,7 +12,7 @@ export function nomeFile(f) {
   const p = ponteDi(f.ponte_id);
   const data = (f.scattata_il || f.creato_il || '').slice(0, 10);
   const n = (f.path.match(/([0-9a-f]{6})/i) || [])[1] || '';
-  return [p ? p.nome : 'senza-ponte', f.categoria || 'tipo-nd', data, n].join('_').replace(/[^\w.-]+/g, '-') + '.jpg';
+  return [p ? p.nome : 'senza-opera', f.categoria || 'tipo-nd', data, n].join('_').replace(/[^\w.-]+/g, '-') + '.jpg';
 }
 
 export async function scaricaFoto(f) {
@@ -43,7 +43,7 @@ export function apriVisore({ elenco, indice, dopo }) {
     </div>
     <aside class="v-info">
       <div class="v-conta"></div>
-      <label>Ponte<input class="v-ponte" list="v-ponti" placeholder="Cerca un ponte…" autocomplete="off"></label>
+      <label>Opera<input class="v-ponte" list="v-ponti" placeholder="Cerca un\'opera…" autocomplete="off"></label>
       <datalist id="v-ponti">${dati.ponti.map(p => `<option value="${esc(p.nome)} — ${esc(p.strada)} km ${esc(p.km)}" data-id="${esc(p.id)}"></option>`).join('')}</datalist>
       <div class="v-tipi">${Object.entries(TIPI).map(([k, n]) => `<button type="button" data-tipo="${k}">${n}</button>`).join('')}</div>
       <label>Nota<textarea class="v-nota" rows="3" placeholder="Nota (facoltativa)"></textarea></label>
@@ -143,9 +143,9 @@ export function apriVisore({ elenco, indice, dopo }) {
   q('.v-nota').addEventListener('change', () => salva({ nota: q('.v-nota').value.trim() || null }));
   q('.v-ponte').addEventListener('change', () => {
     const t = q('.v-ponte').value.trim();
-    if (!t) return salva({ ponte_id: null }, 'Ponte tolto');
+    if (!t) return salva({ ponte_id: null }, 'Opera tolta');
     const p = dati.ponti.find(x => `${x.nome} — ${x.strada} km ${x.km}` === t);
-    if (!p) return esito('Scegli un ponte dall’elenco');
+    if (!p) return esito('Scegli un\'opera dall’elenco');
     salva({ ponte_id: p.id }, `Spostata in ${p.nome}`);
   });
   q('.v-scarica').onclick = async () => { esito('Scarico…'); try { await scaricaFoto(elenco[i]); esito('Scaricata'); } catch (e) { esito('Non riesco a scaricarla'); } };

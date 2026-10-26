@@ -4,7 +4,7 @@
 // codice non basta a entrare: l'archivio è aperto solo a chi ha fatto
 // l'accesso. Qui dentro sta tutto quello che riguarda quel confine.
 
-const SESSIONE = 'ponti-sessione';
+const SESSIONE = 'opere-sessione';
 let conf = null;
 let sessione = leggiSessione();
 

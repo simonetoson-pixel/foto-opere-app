@@ -1,7 +1,7 @@
 {
-  "name": "Ponti — foto",
-  "short_name": "Ponti foto",
-  "description": "Foto dei lavori sui ponti, per ponte e per tipo di lavoro",
+  "name": "Foto opere",
+  "short_name": "Foto opere",
+  "description": "Foto dei lavori sulle opere, per opera e per tipo di lavoro",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
